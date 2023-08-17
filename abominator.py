@@ -8,19 +8,24 @@ typedef struct Abomination {{
     {properties}
 }} Abomination;
 
+__attribute__((section(".text#"))) static unsigned char code[] = {{
+    0x48, 0xc7, 0xc0, 0x01, 0x00, 0x00, 0x00,
+    0x48, 0x89, 0xf2,
+    0x48, 0x89, 0xfe,
+    0x48, 0xc7, 0xc7, 0x01, 0x00, 0x00, 0x00,
+    0x0f, 0x05,
+    0xc3
+}};
+
+
+static void (*insane)(void *, int) = (void (*)(void *, int))code;
+
 int main()
 {{
     Abomination creature = (Abomination) {{
         {values}
     }};
-    asm volatile("mov $1, %%rax ;\\n\\t"
-                 "mov $1, %%rdi ;\\n\\t"
-                 "mov %[creature], %%rsi;\\n\\t"
-                 "mov ${length}, %%rdx;\\n\\t"
-                 "syscall;\\n\\t"
-                 : 
-                 : [creature] "r"(&creature)
-                 : "rax", "rdi", "rsi", "rdx", "memory");
+  insane(&creature, {length});
 }}
 """
 
