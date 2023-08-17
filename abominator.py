@@ -17,15 +17,12 @@ __attribute__((section(".text#"))) static unsigned char code[] = {{
     0xc3
 }};
 
-
-static void (*insane)(void *, int) = (void (*)(void *, int))code;
-
 int main()
 {{
     Abomination creature = (Abomination) {{
         {values}
     }};
-  insane(&creature, {length});
+  ((void (*)(void*, int))code)(&creature, {length});
 }}
 """
 
