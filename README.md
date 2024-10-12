@@ -18,7 +18,7 @@ gcc abomination.c -o abomination
 
 ```sh
 gcc -c print.S
-objdump -d print.o | rg "^\s+[a-f0-9]+:" | sed -E "s/^ +[a-z0-9]+:\t+//" | sed -E "s/\t+.*//" | xargs echo | sed -E "s/([0-9a-f]+)/0x\1,/g"
+objdump -d print.o | grep -E "^\s+[a-f0-9]+:" | sed -E "s/^ +[a-z0-9]+:\t+//" | sed -E "s/\t+.*//" | sed -E "s/([0-9a-f]+)/0x\1,/g"
 ```
 
 Then copy the output to the template
