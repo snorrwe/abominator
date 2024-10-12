@@ -1,6 +1,6 @@
 # Abominator
 
-Inspired by a Tweet by https://moonbase.lgbt/ (I can't find the exact tweet, sorry)
+Inspired by a Tweet by https://moonbase.lgbt/
 
 ## Usage
 
