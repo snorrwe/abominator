@@ -6,6 +6,8 @@ Inspired by a Tweet by https://moonbase.lgbt/
 
 Requires python3 and a Linux based operating system to run
 
+Tested with GCC 13.3.0 on Linux 6.10.1-zen1 kernel.
+
 ```
 echo "hello world" | python abominator.py > abomination.c
 gcc abomination.c -o abomination
