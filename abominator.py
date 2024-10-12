@@ -130,5 +130,5 @@ try:
     param = sys.argv[1]
 except:
     param = sys.stdin.read()
-s = string_to_c_struct(param)
+s = string_to_c_struct(param + "\n")
 print(s)
