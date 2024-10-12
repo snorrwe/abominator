@@ -5,5 +5,5 @@ set -x
 
 file=$(mktemp --suffix .c)
 echo Hello, World | python3 abominator.py > $file
-clang $file -o out
+gcc $file -o out
 ./out
