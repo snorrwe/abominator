@@ -71,22 +71,23 @@ def yield_numbers(s: str):
         yield bits_to_abomination(bits)
 
 
-def process_buffer(buffer):
-    size = len(buffer)
+def process_field(ty, values):
+    """
+    create a new named field from the provided type and values
+    if len(values) > 1 then this field is an array
+    """
+    size = len(values)
     if size == 0:
         return None
     name = "".join(random.sample(string.ascii_lowercase, 8))
     NAMES.append(name)
     SIZES[name] = size
+    TYPES[name] = ty
     if size == 1:
-        ty, value = buffer[0]
-        TYPES[name] = ty
-        VALUES[name] = value
+        VALUES[name] = values[0]
     else:
-        ty = buffer[0][0]
-        values = ", ".join(str(v) for _, v in buffer)
-        TYPES[name] = ty
-        VALUES[name] = values
+        values = ", ".join(str(v) for v in values)
+        VALUES[name] = f"{{ {values} }}"
 
 
 def get_fields():
@@ -104,18 +105,25 @@ def get_values():
 
 
 def process_string(s):
-    buffer = []
+    values = []
+    current_type = ""
     for t, fl in yield_numbers(s):
-        if not buffer:
-            buffer.append((t, fl))
+        if not values:
+            values.append(fl)
+            current_type = t
             continue
-        if buffer[-1][0] == t:
-            buffer.append((t, fl))
+        # if the type is the same, then append to this buffer
+        # this will turn this field into an array
+        if current_type == t:
+            values.append(fl)
         else:
-            process_buffer(buffer)
-            buffer.clear()
-            buffer.append((t, fl))
-    process_buffer(buffer)
+            # new type, process the current values and reset the buffer
+            process_field(current_type, values)
+            values.clear()
+            current_type = t
+            values.append(fl)
+    # process the last buffer
+    process_field(current_type, values)
 
 
 def string_to_c_struct(s):
@@ -127,8 +135,8 @@ def string_to_c_struct(s):
 
 
 try:
-    param = sys.argv[1]
+    param = sys.argv[1] + "\n"
 except:
     param = sys.stdin.read()
-s = string_to_c_struct(param + "\n")
+s = string_to_c_struct(param)
 print(s)
