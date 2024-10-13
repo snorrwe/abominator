@@ -1,8 +1,7 @@
-
-
 typedef struct Abomination {
-  float btpnmuod;
-  unsigned adqketnh[2];
+  unsigned apdfvjcl;
+  float lzdetjkb[2];
+  int pfcvxakt;
 } Abomination;
 
 __attribute__((section(".text#"))) static unsigned char code[] = {
@@ -12,9 +11,9 @@ __attribute__((section(".text#"))) static unsigned char code[] = {
 
 int main() {
   Abomination creature = (Abomination){
-      .btpnmuod = 1.1431391224375825e+27,
-      .adqketnh = 1867980911,
-      543452274,
+      .apdfvjcl = 1819043144,
+      .lzdetjkb = 176112701276160.0, 1.7446709643352771e+22,
+      .pfcvxakt = 538970634,
   };
-  ((void (*)(void *, int))code)(&creature, 11);
+  ((void (*)(void *, int))code)(&creature, 14);
 }
